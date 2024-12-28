@@ -1,0 +1,57 @@
+{% include 'head.html' %}
+<body>
+    {% include 'menu_top.html' %}
+<table width="50%" align="center">
+    <tr>
+        <th  class="title-table table-item th-item">
+            <br><br><br>
+            <h5>Добавить задачу</h5><br><br>
+
+            <form method="post" action="/upload_task" enctype="multipart/form-data">
+
+            <label>Дата создания:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="datetime-local" name="date_created" required><br><br>
+
+            <label>Контрольная дата:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="datetime-local" name="date_control" required><br><br>
+
+            <label>Исполнитель:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="text" name="implementer" required><br><br> <!-- Исправлено имя поля -->
+
+            <label for="facilitator">Куратор:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="facilitator" id="facilitator">
+                    <option value="" disabled selected>Выберите куратора</option>
+                    <option value="kuator1">kuator1</option>
+                    <option value="kuator2">kuator2</option>
+                    <option value="kuator3">kuator3</option>
+                    <option value="kuator4">kuator4</option>
+                </select>
+            <br><br>
+
+            <label>Описание задачи:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </label>
+            <textarea name="describe"></textarea><br><br>
+
+
+            <label for="facilitator">Приоритет задачи:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="priority" id="priority" required>
+                    <option value="" disabled selected>Приоритет</option>
+                    <option value="low">Низкий</option>
+                    <option value="middle">Средний</option>
+                    <option value="high">Высокий</option>
+                    <option value="extreme">Экстремальный</option>
+                </select>
+            <br><br>
+
+            <label for="stat_task">Статус задачи:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="stat_task" id="stat_task" required>
+                    <option value="open">Открытый</option>
+                    <option value="check">На проверке</option>
+                    <option value="close">Закрытый</option>
+                </select>
+            <br><br>
+
+            <input type="submit" value="Добавить">
+            </form>
+        </th>
+    <tr>
+</table>

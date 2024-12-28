@@ -1,0 +1,61 @@
+{% include 'head.html' %}
+{% include 'menu_top.html' %}
+<body>
+
+<div class="task-container">
+    {% if tasks %}
+        {% for task in tasks %}
+            <div class="task-item">
+                <br><div class="task-date-created">Идентификатор: <a href="{{ url_for('task_detail', task_id=task.id) }}"
+                                        class="task-id">{{task.id}}</a></div>
+                <b>Дата создания:</b> <div class="task-date-created">{{ task.date_created }}</div>
+                <br><b>Контрольная дата:</b> <div class="task-date-control">{{ task.date_control }}</div>
+                <br><b>Куратор:</b> <div class="task-implementer">{{ task.facilitator }}</div>
+                <br><b>Исполнитель: </b><div class="task-implementer">{{ task.implementer }}</div>
+                <br><b>Описание:</b> <div class="task-describe">{{ task.describe | markdown | safe}}</div>
+                <br><b>Приоритет:</b> <div class="task-priority">{{ task.priority }}</div>
+                <br><b>Статус:</b> <div class="task-priority">{{ task.stat_task }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Нет задач для отображения.</p>
+    {% endif %}
+</div>
+
+<div class="pagination">
+    {% if page > 1 %}
+        <a class="pagination-link" href="?page={{ page - 1 }}"> &lt; </a>
+    {% endif %}
+
+    {% for i in range(1, (total_answer // per_page) + 2) %}
+        {% if i == page %}
+            <strong>{{ i }}</strong>
+        {% else %}
+         &nbsp; <a href="?page={{ i }}">{{ i }}</a> &nbsp;
+        {% endif %}
+    {% endfor %}
+
+    {% if page < (total_answer // per_page) + 1 %}
+        <a href="?page={{ page + 1 }}"> &gt; </a>
+    {% endif %}
+</div>
+
+
+
+<script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем все элементы с классом task-describe
+            const descriptionElements = document.querySelectorAll('.task-describe');
+
+            descriptionElements.forEach(function(descriptionElement) {
+                const descriptionText = descriptionElement.textContent;
+
+                if (descriptionText.length > 200) {
+                    descriptionElement.textContent = descriptionText.substring(0, 200) + '...'; // Обрезаем текст и добавляем многоточие
+                }
+            });
+        });
+    </script>
+</body>
+
+

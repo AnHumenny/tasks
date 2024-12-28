@@ -1,0 +1,31 @@
+<div align='center'>
+    {% if status == "admin" %}
+<table>
+    <tr>
+        <th>
+            <br>
+                <a class="nav-link" href="/add_user">Добавить пользователя</a> &nbsp; &nbsp; &nbsp;
+        </th>
+
+            <th>
+                <form method="post" action="/delete_user" enctype="multipart/form-data">
+                    Удалить пользователя (ID)
+                            <input type="text" name="delete_user" id="delete_user" required pattern=".{1,}"
+                                   title="Введите не менее 1 символа">
+                            <input type="submit" value="Отправить">&nbsp;  &nbsp;  &nbsp;
+                </form>
+            </th>
+
+            <th>
+                <form method="post" action="/update_id" enctype="multipart/form-data">
+                    Обновить пользователя (ID)
+                        <input type="text" name="update_user" id="update_user"
+                               required pattern=".{1,}" title="Введите не менее 1 символа">
+                        <input type="submit" value="Отправить">
+                </form>
+            </th>
+        </tr>
+    </table>
+</div>
+
+{% endif %}

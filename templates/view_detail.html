@@ -1,0 +1,26 @@
+{% include 'head.html' %}
+<body>
+{% include 'menu_top.html' %}
+
+           <div class="task-container_personal">
+    {% if task %}
+    <div class="">
+        <br>
+        <div class="task-date-created">Идентификатор: <a href="{{ url_for('task_detail', task_id=task.id) }}"
+                                                         class="task-id">{{task.id}}</a></div>
+        <b>Дата создания:</b> <div class="task-date-created">{{ task.date_created }}</div>
+        <br><b>Контрольная дата:</b> <div class="task-date-control">{{ task.date_control }}</div>
+        <br><b>Куратор:</b> <div class="task-implementer">{{ task.facilitator }}</div>
+        <br><b>Исполнитель:</b> <div class="task-implementer">{{ task.implementer }}</div>
+        <br><b>Описание:</b> <div class="task-describe_personal">{{ task.describe | markdown | safe}}</div>
+        <br><b>Приоритет:</b> <div class="task-priority">{{ task.priority }}</div>
+        <br><b>Статус:</b> <div class="task-status">{{ task.stat_task }}</div>
+    </div>
+{% else %}
+    <div>Задача не найдена.</div>
+{% endif %}
+</div>
+
+
+
+</body>

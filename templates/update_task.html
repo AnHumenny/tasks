@@ -1,0 +1,64 @@
+{% include 'head.html' %}
+{% include 'menu_top.html' %}
+
+           <div class="task-container_personal">
+обновление таски
+<table width="50%" align="center">
+    <tr>
+        <th valign="2"  class="title-table table-item th-item">
+            <br><br><br>
+            <h5>Обновить пользователя</h5>
+
+            <form method="post" action="/update_task" enctype="multipart/form-data">
+
+            <label>ID заявки:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="text" name="id" value="{{ answer.id }}" required readonly><br><br>
+
+
+            <label>Дата создания:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="datetime-local" name="date_created" required readonly><br><br>
+
+            <label>Контрольная дата:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="datetime-local" name="date_control"  required readonly><br><br>
+
+            <label>Исполнитель:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="text" name="implementer" value="{{ answer.implementer }}" required><br><br>
+
+            <label for="facilitator">Куратор:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="facilitator" id="facilitator" required>
+                    <option value="kuator1">kuator1</option>
+                    <option value="kuator2">kuator2</option>
+                    <option value="kuator3">kuator3</option>
+                    <option value="kuator4">kuator4</option>
+                </select>
+            <br><br>
+            <label>Описание задачи:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </label>
+            <textarea name="describe">{{ answer.describe }}</textarea><br><br>
+
+
+            <label for="priority">Приоритет задачи:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="priority" id="priority" required>
+                    <option value="low">Низкий</option>
+                    <option value="middle">Средний</option>
+                    <option value="high">Высокий</option>
+                    <option value="extreme">Экстремальный</option>
+                </select>
+            <br><br>
+
+            <label for="stat_task">Статус задачи:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="stat_task" id="stat_task" required>
+                    <option value="open">Открытый</option>
+                    <option value="check">На проверке</option>
+                    <option value="close">Закрытый</option>
+                </select>
+            <br><br>
+
+            <input type="submit" value="Обновить">
+            </form>
+        </th>
+    <tr>
+
+</table>
+</div>
+
+

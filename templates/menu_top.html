@@ -1,0 +1,29 @@
+<table width="90%" align="center">
+    <tr>
+        <td>
+            <a class="nav-link" href="/">Главная</a>
+        </td>
+        <td>
+            <a class="nav-link" href="/personal">Личный кабинет</a>
+        </td>
+        <td>
+            <a class="nav-link" href="/user">Пользователи</a>
+        </td>
+        <td>
+            <a class="nav-link" href="/logout">Выход</a>
+        </td>
+        <th valign="2">
+            <form method="post" action="/search" enctype="multipart/form-data">
+                <label for="search">Поиск &nbsp;&nbsp;  </label>
+                <input type="text" name="search" id="search" required pattern=".{3,}"
+                       title="Введите не менее 3 символов">   &nbsp; &nbsp; &nbsp;
+                <input type="submit" value="Отправить">
+                <br>
+                <input type="radio" name="search_type" value="name" required> All &nbsp; &nbsp; &nbsp;
+                <input type="radio" name="search_type" value="open"> Open &nbsp; &nbsp; &nbsp;
+                <input type="radio" name="search_type" value="check"> Check &nbsp; &nbsp; &nbsp;
+                <input type="radio" name="search_type" value="close"> Close &nbsp; &nbsp;
+            </form>
+        </th>
+    </tr>
+</table>

@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.task-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.task-container_personal {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.task-container_personal_task {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.task-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
+
+.task-personal {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0 auto;
+    width: calc(90% - 20px);
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
+
+.task-user {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: calc(90% - 20px);
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
+
+.task-item:hover {
+    background-color: #eaeaea;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.task-user:hover {
+    background-color: #eaeaea;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.task-id {
+    font-weight: bold;
+}
+
+.task-priority {
+    color: red;
+}
+
+.task-status {
+    color: green;
+}
+
+.user-id {
+    margin-left: 5px;
+}
+
+.task-describe {
+    margin-left: 5px;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.task-describe_personal {
+    margin-left: 5px;
+    max-width: 90%;
+    white-space: wrap;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination-link {
+    margin: 0 5px;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.current-page {
+    margin: 0 5px;
+    padding: 8px 12px;
+    font-weight: bold;
+    color: #333;
+}

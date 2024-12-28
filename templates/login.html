@@ -1,0 +1,20 @@
+{% include 'head.html' %}
+<body>
+{% include 'menu_top.html' %}
+
+<div class="task-container" align="center">
+            <div class="task-item">
+                <div class="task-id"> <h5>Ввод данных</h5></div>
+            <div class="task-id">
+            <form method="post" action="/login" enctype="multipart/form-data">
+                <h5><label>Логин:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label></h5>
+                <input type="text" name="username" required><br>
+                <h5><label>Пароль:&nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label></h5>
+                <input type="password" name="password" required><br><br>
+                <input type="submit" value="Отправить">
+            </form>
+            </div>
+        </div>
+  </div>
+
+</body>

@@ -1,0 +1,55 @@
+{% include 'head.html' %}
+<body>
+{% include 'menu_top.html' %}
+<div class="task-container_personal">
+<table width="50%" align="center">
+    <tr>
+        <th valign="2"  class="title-table table-item th-item">
+            <br><br><br>
+            <h5>Добавить пользователя</h5>
+
+            <form method="post" action="/insert_user" enctype="multipart/form-data">
+            <label>Дата создания:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="datetime-local" name="date_created" required><br><br>
+
+            <label>Логин:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="text" name="login" required><br><br>
+
+            <label>ФИО пользователя:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="text" name="name" required><br><br>
+
+            <label for="position">Должность:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="position" id="position" required>
+                   <option value="" disabled selected>Выберите должность</option>
+                   <option value="position_1">position_1</option>
+                   <option value="position_2">position_2</option>
+                   <option value="position_3">position_3</option>
+                   <option value="position_4">position_4</option>
+                   <option value="position_5">position_5</option>
+                </select>
+<br><br>
+            <label for="status">Статус:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="status" id="status" required>
+                    <option value="" disabled selected>Выберите статус</option>
+                    <option value="user">Пользователь</option>
+                    <option value="admin">Администратор</option>
+                </select>
+<br><br>
+
+            <label>Общая информация:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </label>
+            <textarea name="describe"></textarea><br><br>
+
+            <label>Пароль:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="password" name="password" required><br><br>
+
+            <input type="submit" value="Добавить">
+
+            </form>
+        </th>
+    <tr>
+
+</table>
+
+</div>
+</body>
+

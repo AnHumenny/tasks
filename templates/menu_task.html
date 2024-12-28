@@ -1,0 +1,30 @@
+<div align='center'>
+ {% if status == "admin" %}
+<table>
+    <tr>
+        <th><br>
+                <a class="nav-link" href="/add_task">Добавить задачу</a> &nbsp; &nbsp; &nbsp;
+        </th>
+
+            <th>
+                <form method="post" action="/delete_task" enctype="multipart/form-data">
+                    Удалить задачу (ID)
+                            <input type="text" name="delete_task" id="delete_user" required pattern=".{1,}"
+                                   title="Введите не менее 1 символа">
+                            <input type="submit" value="Отправить"> &nbsp;  &nbsp; | &nbsp; &nbsp;
+                </form>
+            </th>
+
+            <th>
+                <form method="post" action="/update_task_id" enctype="multipart/form-data">
+                    Обновить задачу (ID)
+                        <input type="text" name="update_task_id" id="update_task_id"
+                               required pattern=".{1,}" title="Введите не менее 1 символа">
+                        <input type="submit" value="Отправить">
+                </form>
+            </th>
+        </tr>
+    </table>
+</div>
+
+{% endif %}

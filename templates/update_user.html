@@ -1,0 +1,54 @@
+{% include 'head.html' %}
+<body>
+{% include 'menu_top.html' %}
+
+<div class="task-container_personal">
+
+<table width="50%" align="center">
+    <tr>
+        <th valign="2"  class="title-table table-item th-item">
+            <br><br><br>
+            <h5>Обновить пользователя</h5>
+
+            <form method="post" action="/update_user" enctype="multipart/form-data">
+            <label>ID пользователя:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="text" name="id" value="{{ answer.id }}" required readonly><br><br>
+
+            <label>Дата создания:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="datetime-local" name="date_created" value="{{ answer.date_created }}" required readonly><br><br>
+
+            <label>Логин:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="text" name="login" value="{{ answer.login }}" required readonly><br><br>
+
+            <label>ФИО пользователя:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
+            <input type="text" name="name" value="{{ answer.name }}" required><br><br>
+
+            <label for="position">Должность:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+               <select name="position" id="position" required>
+                   <option value="trainee">Стажёр</option>
+                   <option value="junior">Джуниор</option>
+                   <option value="middle">Миддл</option>
+                   <option value="senior">Сеньор</option>
+                   <option value="game designer">Геймдизайнер</option>
+               </select>
+            <br><br>
+
+            <label for="status">Статус:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <select name="status" id="status" required>
+                    <option value="user">Пользователь</option>
+                    <option value="admin">Администратор</option>
+                </select>
+            <br><br>
+
+                <label>Общая информация:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </label>
+                <textarea name="describe" >{{ answer.describe }}</textarea><br><br>
+                <input type="submit" value="Изменить">
+            </form>
+        </th>
+    <tr>
+
+</table>
+
+</div>
+
+</body>
