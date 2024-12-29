@@ -37,7 +37,11 @@ class DUser(Model):
     password = Column(String(length=200), nullable=False)
 
 
-
+class DTutor(Model):
+    __tablename__ = "Tutor"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tutor = Column(String(length=20), nullable=False, unique=True)
+    name = Column( String(length=100), nullable=False)
 
 
 
