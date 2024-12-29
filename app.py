@@ -139,7 +139,12 @@ async def upload_form():
         return await render_template("login.html")
     if status != "admin":
         return await render_template("index.html")
-    return await render_template("add_task.html")
+
+    tutor = await Repo.select_tutor_all()
+    user = await Repo.select_user_all()
+    for row in user:
+        print(row)
+    return await render_template("add_task.html", tutor=tutor, user=user)
 
 
 @app.route('/upload_task', methods=['POST'])
@@ -219,7 +224,8 @@ async def update_task_id():
     if not ssid:
         return redirect(url_for('index'))
     answer = await Repo.select_task_id(ssid)
-    return await render_template("update_task.html", answer=answer)
+    tutor = await Repo.select_tutor_all()
+    return await render_template("update_task.html", answer=answer, tutor=tutor)
 
 
 @app.route('/update_task', methods=['POST'])
