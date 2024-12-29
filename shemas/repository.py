@@ -1,7 +1,7 @@
 from sqlalchemy import select, delete, and_, update
 from sqlalchemy.exc import NoResultFound, IntegrityError, SQLAlchemyError
 import logging
-from shemas.database import DTask,  DUser, new_session
+from shemas.database import DTask,  DUser, DTutor, new_session
 
 
 class Repo:
@@ -9,7 +9,7 @@ class Repo:
     @classmethod
     async def search_executor_tasks(cls, search):
         if not search:
-            return "Ошибка при поиске книг"
+            return "Ошибка при поиске"
         async with new_session() as session:
             try:
                 q = select(DTask).where(DTask.implementer.like(f"%{search}%"))
@@ -249,3 +249,39 @@ class Repo:
             if answer is None:
                 return None
             return answer
+
+    @classmethod
+    async def select_user_post(cls, ssid):
+        async with new_session() as session:
+            q = select(DUser.post).where(DUser.id == int(ssid))
+            result = await session.execute(q)
+            answer = result.scalar()
+            if answer is None:
+                return None
+            return answer
+
+    @classmethod
+    async def select_tutor_all(cls):
+        async with new_session() as session:
+            try:
+                q = select(DTutor.tutor, DTutor.name).order_by(DTutor.id.desc())
+                result = await session.execute(q)
+                rows = result.fetchall()
+                tasks_user = [(row.tutor, row.name) for row in rows]     #в кортежи
+                return tasks_user
+            except Exception as e:
+                print(f"Ничего не найдено: {e}")
+                return None
+
+    @classmethod
+    async def select_user_all(cls):
+        async with new_session() as session:
+            try:
+                q = select(DUser.id, DUser.name).order_by(DUser.id.desc())
+                result = await session.execute(q)
+                rows = result.fetchall()
+                name_user = [(row[0], row[1]) for row in rows]
+                return name_user
+            except Exception as e:
+                print(f"Ничего не найдено: {e}")
+                return None
