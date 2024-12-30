@@ -1,13 +1,13 @@
 {% include 'head.html' %}
 {% include 'menu_top.html' %}
 
-           <div class="task-container_personal">
-обновление таски
+<div class="task-container_personal">
+
 <table width="50%" align="center">
     <tr>
         <th valign="2"  class="title-table table-item th-item">
             <br><br><br>
-            <h5>Обновить пользователя</h5>
+            <h5>Обновить задачу</h5>
 
             <form method="post" action="/update_task" enctype="multipart/form-data">
 
@@ -21,20 +21,29 @@
             <label>Контрольная дата:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
             <input type="datetime-local" name="date_control"  required readonly><br><br>
 
-            <label>Исполнитель:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
-            <input type="text" name="implementer" value="{{ answer.implementer }}" required><br><br>
+            <label for="implementer">Исполнитель:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                <input list="implementer-options" name="implementer" id="implementer"
+                       value="{{ answer.implementer }}" required>
+
+                    <datalist id="implementer-options">
+                        {% for row in user %}
+                           <option value="{{ row[1] }}">{{ row[1] }}</option>
+                        {% endfor %}
+                    </datalist>
+            <br><br>
 
             <label for="facilitator">Куратор:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
-                <select name="facilitator" id="facilitator" required>
-                    <option value="kuator1">kuator1</option>
-                    <option value="kuator2">kuator2</option>
-                    <option value="kuator3">kuator3</option>
-                    <option value="kuator4">kuator4</option>
-                </select>
+                 <input list="facilitator-options" name="facilitator" id="facilitator"
+                         value="{{ answer.facilitator }}" required>
+                    <datalist id="facilitator-options">
+                        {% for row in tutor %}
+                           <option value="{{ row[0] }}">{{ row[1] }}</option>
+                        {% endfor %}
+                    </datalist>
             <br><br>
+
             <label>Описание задачи:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </label>
             <textarea name="describe">{{ answer.describe }}</textarea><br><br>
-
 
             <label for="priority">Приоритет задачи:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
                 <select name="priority" id="priority" required>

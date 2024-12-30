@@ -139,7 +139,6 @@ async def upload_form():
         return await render_template("login.html")
     if status != "admin":
         return await render_template("index.html")
-
     tutor = await Repo.select_tutor_all()
     user = await Repo.select_user_all()
     for row in user:
@@ -279,7 +278,7 @@ async def all_users():
         return await render_template("login.html")
     status = session.get('status')               # можно добавить сортировку по группам и т.д.
     page = int(request.args.get('page', 1))
-    per_page = 4
+    per_page = 32
     if access:
         async with async_session() as sessions:
             async with sessions.begin():
