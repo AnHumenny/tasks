@@ -23,15 +23,14 @@
             <label>ФИО пользователя:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  </label>
             <input type="text" name="name" value="{{ answer.name }}" required><br><br>
 
-            <label for="position">Должность:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
-               <select name="position" id="position" required>
-                   <option value="trainee">Стажёр</option>
-                   <option value="junior">Джуниор</option>
-                   <option value="middle">Миддл</option>
-                   <option value="senior">Сеньор</option>
-                   <option value="game designer">Геймдизайнер</option>
-               </select>
-            <br><br>
+           <label for="position">Должность:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+               <input list="position-options" name="position" id="position" required>
+                   <datalist id="position-options">
+                       {% for row in position %}
+                           <option value="{{ row }}"></option>
+                       {% endfor %}
+                   </datalist>
+
 
             <label for="status">Статус:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
                 <select name="status" id="status" required>
