@@ -44,4 +44,8 @@ class DTutor(Model):
     name = Column( String(length=100), nullable=False)
 
 
+class DPost(Model):
+    __tablename__ = "Posts"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    position = Column(String(length=50), nullable=False, unique=True)
 
