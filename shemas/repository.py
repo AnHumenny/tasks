@@ -1,7 +1,7 @@
 from sqlalchemy import select, delete, and_, update
 from sqlalchemy.exc import NoResultFound, IntegrityError, SQLAlchemyError
 import logging
-from shemas.database import DTask,  DUser, DTutor, new_session
+from shemas.database import DTask, DUser, DTutor, new_session, DPost
 
 
 class Repo:
@@ -196,7 +196,6 @@ class Repo:
     @classmethod
     async def update_task(cls, ssid, implementer, facilitator, priority, describe, stat_task):
         async with new_session() as session:
-            print("в функции ", ssid, implementer, facilitator, priority, describe, stat_task)
             q = (
                 update(DTask)
                 .where(DTask.id == int(ssid))
@@ -272,6 +271,18 @@ class Repo:
             except Exception as e:
                 print(f"Ничего не найдено: {e}")
                 return None
+
+    @classmethod
+    async def select_posts_all(cls):
+        async with new_session() as session:
+            try:
+                q = select(DPost.position).order_by(DPost.id.desc())
+                result = await session.execute(q)
+                answer = result.scalars().all()
+                return answer
+            except Exception as e:
+                print(f"Ничего не найдено: {e}")
+                return []
 
     @classmethod
     async def select_user_all(cls):
