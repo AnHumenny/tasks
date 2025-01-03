@@ -359,9 +359,9 @@ async def update_id():
     if not ssid:
         return redirect(url_for('index'))
     answer = await Repo.select_user_id(ssid)
-    print("ssid", ssid)
-    print(answer)
-    return await render_template("update_user.html", answer=answer)
+    position = await Repo.select_posts_all()
+    return await render_template("update_user.html", answer=answer, position=position)
+
 
 @app.route('/update_user', methods=['POST'])
 async def update_user():
@@ -375,7 +375,6 @@ async def update_user():
     position = form_data.get('position')
     status = form_data.get('status')
     describe = form_data.get('describe')
-    print("в теле ", ssid, logins, name, position, status, describe)
     if not access:
         return await render_template("login.html")
     if stat != "admin":
