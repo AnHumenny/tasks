@@ -71,11 +71,11 @@ def hash_password(password: str) -> str:
 
 async def create_user():
     async with user_session() as session:
-        login = "admin"
-        name = "Василий Пупкин"
-        position = "Главный перец"
-        describe = "рано обалдевший пупс"
-        password = str("qwerty")
+        login = os.getenv('login')
+        name = os.getenv('name')
+        position = os.getenv('position')
+        describe = os.getenv('describe')
+        password = str(os.getenv('password'))
         date_time = datetime.now()
         date_time_str = date_time.strftime('%Y-%m-%dT%H:%M')
         naive_datetime_created = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M')
@@ -83,7 +83,7 @@ async def create_user():
         date_created = local_tz.localize(naive_datetime_created)
         date_created_naive = date_created.replace(tzinfo=None)
         hashed_password = hash_password(password)
-        superuser = DUser(
+        user = DUser(
             date_created=date_created_naive,
             login=login,
             status='admin',
@@ -92,7 +92,7 @@ async def create_user():
             describe=describe,
             password=hashed_password
         )
-        session.add(superuser)
+        session.add(user)
         await session.commit()
 
 
