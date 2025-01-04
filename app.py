@@ -78,7 +78,6 @@ async def index():
             paginated_tasks = answer[start:end]
         pagination_links = []
         total_pages = (total_answer // per_page) + (1 if total_answer % per_page > 0 else 0)
-
         return await render_template('index.html', tasks=paginated_tasks, status=status,
                                      total_answer=total_answer, total_pages=total_pages, page=page, per_page=per_page,
                                      pagination_links=pagination_links)
@@ -117,7 +116,7 @@ async def personal():
     per_page = 8
     async with async_session() as sess:
         async with sess.begin():
-            tasks = await Repo.select_all_tasks()
+            tasks = await Repo.select_user_tasks(name)
             total_answer = len(tasks)
             start = (page - 1) * per_page
             end = start + per_page
@@ -305,7 +304,8 @@ async def user_form():
         return await render_template("login.html")
     if status != "admin":
         return await render_template("index.html")
-    return await render_template("add_user.html")
+    answer = await Repo.select_posts()
+    return await render_template("add_user.html", position=answer)
 
 
 @app.route('/insert_user', methods=['POST'])
@@ -323,11 +323,11 @@ async def add_new_user():
     logins = form_data.get('login')
     name = form_data.get('name')
     position = form_data.get('position')
+    print("это позиция - ", position)
     status = form_data.get('status')
     describe = form_data.get('describe')
     password = form_data.get('password')
-    password = hash_password(password)
-    hashed_password = hash_password(password)
+    hashed_password = str(hash_password(password))
     if timezone_str is None:
         timezone_str = 'UTC+3'
     try:
@@ -342,7 +342,7 @@ async def add_new_user():
     async with async_session() as sessions:
         async with sessions.begin():
             await Repo.create_user(date_created_naive, logins, status, name, position, describe, hashed_password)
-    return redirect(url_for('index'))
+    return redirect(url_for('all_users'))
 
 
 @app.route('/update_id', methods=['POST'])
@@ -444,13 +444,44 @@ async def search_results():
                 start = (page - 1) * per_page
                 end = start + per_page
                 paginated_tasks = tasks[start:end]
-
         total_pages = (total_answer // per_page) + (1 if total_answer % per_page > 0 else 0)
-
     return await render_template('search.html', tasks=paginated_tasks,
                                  total_answer=total_answer, total_pages=total_pages, page=page,
                                  per_page=per_page)
 #end search
+
+
+#functional
+@app.route('/add_post')
+async def add_post():
+    token = session.get('token')
+    access = verify_token(token)
+    status = session.get('status')
+    if not access:
+        return await render_template("login.html")
+    if status != "admin":
+        return await render_template("index.html")
+    answer = await Repo.select_posts()
+    for row in answer:
+        print(row)
+    return await render_template("add_post.html", answer=answer)
+
+
+@app.route('/insert_post', methods=['POST'])
+async def add_new_post():
+    token = session.get('token')
+    access = verify_token(token)
+    status = session.get('status')
+    if not access:
+        return await render_template("login.html")
+    if status != "admin":
+        return redirect(url_for('index'))
+    form_data = await request.form
+    position = form_data.get('position')
+    async with async_session() as sessions:
+        async with sessions.begin():
+            await Repo.add_position(position)
+    return redirect(url_for('add_post'))
 
 
 @app.route('/logout')
