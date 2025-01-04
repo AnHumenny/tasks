@@ -1,0 +1,26 @@
+{% include 'head.html' %}
+<body>
+{% include 'menu_top.html' %}
+<div class="task-container_personal">
+    <div class="task-container">
+        {% for row in  answer %}
+            <div class="task-item">
+                {{ row }}
+                </div>
+        {% endfor %}
+
+    </div>
+    <div class="task-container_personal">
+        <div class="task-container">
+            <h5> </h5>
+                <form method="post" action="/insert_post" enctype="multipart/form-data">
+                    <label>добавить должность </label>
+                    <input type="text" name="position" required><br><br>
+                    <input type="submit" value="Добавить">
+                </form>
+        </div>
+    </div>
+
+</div>
+</body>
+
