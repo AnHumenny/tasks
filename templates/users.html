@@ -11,7 +11,10 @@
                 <div class="task-date-created">{{ user.date_created }}</div>
                 <div class="task-date-control">{{ user.login }}</div>
                 <div class="task-implementer">{{ user.name }}</div>
-                <div class="task-describe">{{ user.describe }}</div>
+                <div class="task-post">{{ user.post }}</div>
+                {% if status == 'admin' %}
+                     <div class="task-post">{{ user.describe }}</div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -35,4 +38,4 @@
 </div>
 
 </body>
-</html>
+
