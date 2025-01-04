@@ -78,6 +78,18 @@ class Repo:
                 print(f"Произошла ошибка при выборке задач: {e}")
                 return None
 
+    @classmethod
+    async def select_user_tasks(cls, name):
+        async with new_session() as session:
+            try:
+                q = select(DTask).where(DTask.implementer == name).order_by(DTask.id.desc())
+                result = await session.execute(q)
+                tasks = result.scalars().all()
+                return tasks
+            except Exception as e:
+                print(f"Произошла ошибка при выборке задач: {e}")
+                return None
+
 
     @classmethod
     async def select_tasks_user(cls, login):
@@ -95,7 +107,7 @@ class Repo:
     @classmethod
     async def select_info(cls, login):
         async with new_session() as session:
-            q = select(DUser).where(DUser.login == login)
+            q = select(DTask).where(DTask.implementer == login)
             result = await session.execute(q)
             answer = result.scalar()
             if answer is None:
@@ -132,7 +144,24 @@ class Repo:
                 password=hashed_password
             )
             session.add(new_user)
-            await session.commit()
+
+            try:
+                await session.commit()
+                print("Пользователь успешно добавлен!")
+                return new_user  # Возврат нового пользователя или его ID
+            except IntegrityError as e:
+                await session.rollback()  # Откат транзакции в случае ошибки
+                print("Ошибка: Дублирование данных или нарушение уникальности.")
+                # Здесь можно обработать исключение, например, логировать его или вернуть сообщение об ошибке
+                return None  # Или вернуть сообщение об ошибке
+            except SQLAlchemyError as e:
+                await session.rollback()  # Откат транзакции в случае ошибки
+                print(f"Ошибка базы данных: {str(e)}")
+                return None  # Или вернуть сообщение об ошибке
+            except Exception as e:
+                await session.rollback()  # Откат транзакции в случае ошибки
+                print(f"Произошла ошибка: {str(e)}")
+                return None  # Или вернуть сообщение об ошибке
 
 
     @classmethod
@@ -249,6 +278,7 @@ class Repo:
                 return None
             return answer
 
+
     @classmethod
     async def select_user_post(cls, ssid):
         async with new_session() as session:
@@ -258,6 +288,7 @@ class Repo:
             if answer is None:
                 return None
             return answer
+
 
     @classmethod
     async def select_tutor_all(cls):
@@ -272,6 +303,7 @@ class Repo:
                 print(f"Ничего не найдено: {e}")
                 return None
 
+
     @classmethod
     async def select_posts_all(cls):
         async with new_session() as session:
@@ -283,6 +315,7 @@ class Repo:
             except Exception as e:
                 print(f"Ничего не найдено: {e}")
                 return []
+
 
     @classmethod
     async def select_user_all(cls):
@@ -296,3 +329,32 @@ class Repo:
             except Exception as e:
                 print(f"Ничего не найдено: {e}")
                 return None
+
+
+    @classmethod
+    async def select_posts(cls):
+        async with new_session() as session:
+            try:
+                q = select(DPost.position)
+                result = await session.execute(q)
+                posts = result.scalars().all()
+                return posts
+            except Exception as e:
+                print(f"Произошла ошибка при выборке задач: {e}")
+                return None
+
+
+    @classmethod
+    async def add_position(cls, position):
+        async with new_session() as session:
+            try:
+                new_post = DPost(position=position)
+                session.add(new_post)
+                await session.commit()
+                return "OK"
+            except IntegrityError:
+                await session.rollback()
+                return 'Должность должна быть уникальной!'
+            except Exception as e:
+                await session.rollback()
+                return f'Произошла ошибка: {str(e)}'
