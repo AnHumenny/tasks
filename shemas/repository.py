@@ -335,7 +335,7 @@ class Repo:
     async def select_posts(cls):
         async with new_session() as session:
             try:
-                q = select(DPost.position)
+                q = select(DPost)
                 result = await session.execute(q)
                 posts = result.scalars().all()
                 return posts
@@ -358,3 +358,49 @@ class Repo:
             except Exception as e:
                 await session.rollback()
                 return f'Произошла ошибка: {str(e)}'
+
+    @classmethod
+    async def select_facilitator(cls):
+        async with new_session() as session:
+            try:
+                q = select(DTutor)
+                result = await session.execute(q)
+                answer = result.scalars().all()
+                return answer
+            except Exception as e:
+                print(f"Произошла ошибка при выборке задач: {e}")
+                return None
+
+    @classmethod
+    async def add_facilitator(cls, tutor, name):
+        async with new_session() as session:
+            try:
+                q = DTutor(tutor=tutor, name=name)
+                session.add(q)
+                await session.commit()
+                return "OK"
+            except IntegrityError:
+                await session.rollback()
+                return 'Должность должна быть уникальной!'
+            except Exception as e:
+                await session.rollback()
+                return f'Произошла ошибка: {str(e)}'
+
+
+    @classmethod
+    async def delete_facilitator(cls, ssid):
+        async with new_session() as session:
+            q = delete(DTutor).where(DTutor.id == int(ssid))
+            await session.execute(q)
+            await session.commit()
+        return
+
+
+    @classmethod
+    async def delete_post(cls, ssid):
+        print("удаляемый id", ssid)
+        async with new_session() as session:
+            q = delete(DPost).where(DPost.id == int(ssid))
+            await session.execute(q)
+            await session.commit()
+        return
