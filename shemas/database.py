@@ -20,7 +20,7 @@ class DTask(Model):
     date_control = Column(DateTime(), nullable=False)
     facilitator = Column(String(length=50), nullable=False)
     implementer = Column(String(length=100), nullable=False)
-    describe = Column(String(length=1000), nullable=False)
+    describe = Column(String(length=5000), nullable=False)
     priority = Column(String(length=20), nullable=False)
     stat_task = Column(String(length=30), nullable=False)
 
@@ -33,14 +33,14 @@ class DUser(Model):
     name = Column( String(length=100), nullable=False)
     post = Column(String(length=100), nullable=False)
     status = Column(String(length=100), nullable=False)
-    describe = Column(String(length=1000), nullable=False)
+    describe = Column(String(length=5000), nullable=False)
     password = Column(String(length=200), nullable=False)
 
 
 class DTutor(Model):
     __tablename__ = "Tutor"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    tutor = Column(String(length=20), nullable=False, unique=True)
+    tutor = Column(String(length=20), nullable=False)
     name = Column( String(length=100), nullable=False)
 
 
