@@ -1,10 +1,11 @@
-#первичнное наполнение Tasks
+#тестовое наполнение Tasks
 import asyncio
 import hashlib
 from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from dotenv import load_dotenv
 from shemas.database import engine, DTask
+
 
 load_dotenv()
 
