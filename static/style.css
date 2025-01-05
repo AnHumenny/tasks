@@ -64,8 +64,13 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+
 .task-id {
     font-weight: bold;
+}
+
+.task-link {
+    background-color: #eaeaea;
 }
 
 .task-priority {
