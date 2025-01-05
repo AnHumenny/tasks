@@ -1,0 +1,72 @@
+<script>
+        const token = "{{ session.token }}"; // Встраиваем токен в JavaScript
+        sessionStorage.setItem('token', token); // Сохраняем токен в sessionStorage
+    </script>
+{% include 'head.html' %}
+<body>
+{% include 'menu_top.html' %}
+{% for row in answer %}
+    <div class="task-item" data-id="{{ row.id }}">
+       <img src="{{ url_for('static', filename='images/open.png') }}"> {{ row.id }} | {{ row.tutor }} : {{ row.name }}
+        <div align="right">
+            <button onclick="deleteFacilitator({{ row.id }})"><img src="{{ url_for('static', filename='images/close.png') }}">
+                </button>
+        </div>
+<script>
+function deleteFacilitator(id) {
+    if (confirm('Вы уверены, что хотите удалить фасилитатора с ID ' + id + '?')) {
+        const token = sessionStorage.getItem('token'); // Получаем токен
+
+        if (!token) {
+            alert('Ошибка: токен аутентификации отсутствует. Пожалуйста, войдите в систему.');
+            return;
+        }
+
+        fetch('/delete_facilitator/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token, // Добавляем токен в заголовки
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Фасилитатор с ID ' + id + ' был удален.');
+                document.querySelector(`.task-item[data-id="${id}"]`).remove();
+            } else {
+                return response.text().then(text => {
+                    alert('Ошибка при удалении фасилитатора: ' + text);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+        });
+    }
+}
+
+</script>
+    </div>
+
+{% endfor %}
+
+    <div class="task-container_personal">
+        <div class="task-container">
+            <h5> </h5>
+                <form method="post" action="/insert_facilitator" enctype="multipart/form-data">
+                    <label>Группа </label>
+                    <input type="text" name="group" required><br><br>
+                    <label>Куратор </label>
+                    <input list="facilitator-options" name="name" id="name" required>
+                    <datalist id="facilitator-options">
+                        {% for row in users %}
+                           <option value="{{ row.name }}">{{ row.name }}</option>
+                        {% endfor %}
+                    </datalist>
+                    <input type="submit" value="Добавить">
+                </form>
+        </div>
+    </div>
+
+</body>
+
