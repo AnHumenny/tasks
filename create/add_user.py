@@ -1,4 +1,4 @@
-#первичнное наполнение Users
+#тестовое наполнение Users
 import asyncio
 import hashlib
 from datetime import datetime
@@ -6,8 +6,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from dotenv import load_dotenv
 from shemas.database import engine, DUser
-
-
 load_dotenv()
 
 
@@ -20,13 +18,11 @@ async def create_user(date_created, login, name, post, status, describe, passwor
     hashed_password = hash_password(password)  # Hash the password
     async with AsyncSession(engine) as session:
         async with session.begin():
-
             result = await session.execute(select(DUser).where(DUser.login == login))
             existing_user = result.scalars().first()
             if existing_user:
                 print(f"User  with login '{login}' already exists.")
                 return
-
             new_user = DUser(
                 date_created=date_created,
                 login=login,
