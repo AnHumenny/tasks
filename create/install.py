@@ -1,4 +1,3 @@
-
 import asyncio
 import hashlib
 from datetime import datetime
@@ -10,6 +9,7 @@ from shemas.database import DUser, DTutor, DPost, DTask
 from dotenv import load_dotenv
 import os
 load_dotenv()
+
 
 DB_HOST = os.getenv('DB_HOST')
 DB_USER = os.getenv('DB_USER')
