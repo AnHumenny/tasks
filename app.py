@@ -396,6 +396,8 @@ async def delete_user():
         return await render_template("delete_user.html")
     form_data = await request.form
     ssid = form_data.get('delete_user')
+    if ssid == "1":
+        return redirect(url_for('all_users'))
     if ssid is None:
         return "ID пользователя не предоставлен", 400
     async with async_session() as sessions:
@@ -462,8 +464,6 @@ async def add_post():
     if status != "admin":
         return await render_template("index.html")
     answer = await Repo.select_posts()
-    for row in answer:
-        print(row)
     return await render_template("add_post.html", answer=answer)
 
 
@@ -481,6 +481,73 @@ async def add_new_post():
     async with async_session() as sessions:
         async with sessions.begin():
             await Repo.add_position(position)
+    return redirect(url_for('add_post'))
+
+
+@app.route('/add_facilitator')
+async def add_facilitator():
+    token = session.get('token')
+    access = verify_token(token)
+    status = session.get('status')
+    if not access:
+        return await render_template("login.html")
+    if status != "admin":
+        return await render_template("index.html")
+    answer = await Repo.select_facilitator()
+    users = await Repo.select_all_users()
+    return await render_template("add_facilitator.html", answer=answer, users=users)
+
+
+@app.route('/insert_facilitator', methods=['POST'])
+async def add_new_facilitator():
+    token = session.get('token')
+    access = verify_token(token)
+    status = session.get('status')
+    if not access:
+        return await render_template("login.html")
+    if status != "admin":
+        return redirect(url_for('index'))
+    form_data = await request.form
+    tutor = form_data.get('group')
+    name = form_data.get('name')
+    print("tutor, name", tutor, name)
+    async with async_session() as sessions:
+        async with sessions.begin():
+            await Repo.add_facilitator(tutor, name)
+    return redirect(url_for('index'))
+
+
+@app.route('/delete_facilitator/<int:id>', methods=['POST'])
+async def delete_facilitator(id):
+    token = session.get('token')
+    access = verify_token(token)
+    status = session.get('status')
+    if not access:
+        return await render_template("login.html")
+    if status != "admin":
+        return await render_template("users.html")
+    if id is None:
+        return "ID пользователя не предоставлен", 400
+    async with async_session() as sess:
+        async with sess.begin():
+            await Repo.delete_facilitator(id)
+    return redirect(url_for('add_facilitator'))
+
+
+@app.route('/delete_post/<int:id>', methods=['POST'])
+async def delete_post(id):
+    token = session.get('token')
+    access = verify_token(token)
+    status = session.get('status')
+    if not access:
+        return await render_template("login.html")
+    if status != "admin":
+        return await render_template("users.html")
+    if id is None:
+        return "ID пользователя не предоставлен", 400
+    async with async_session() as sess:
+        async with sess.begin():
+            await Repo.delete_post(id)
     return redirect(url_for('add_post'))
 
 
